@@ -1,0 +1,90 @@
+// PSEUDOCODE FÜR TEMPERATURUMRECHNER
+
+// 1. HAUPTFUNKTIONEN
+
+// Funktion: Celsius zu Fahrenheit umrechnen
+FUNKTION celsius_zu_fahrenheit(celsius)
+    GEBE ZURÜCK (celsius * 9/5) + 32
+ENDE FUNKTION
+
+// Funktion: Fahrenheit zu Celsius umrechnen
+FUNKTION fahrenheit_zu_celsius(fahrenheit)
+    GEBE ZURÜCK (fahrenheit - 32) * 5/9
+ENDE FUNKTION
+
+// Funktion: Celsius zu Kelvin umrechnen
+FUNKTION celsius_zu_kelvin(celsius)
+    GEBE ZURÜCK celsius + 273.15
+ENDE FUNKTION
+
+// Funktion: Fahrenheit zu Kelvin umrechnen
+FUNKTION fahrenheit_zu_kelvin(fahrenheit)
+    GEBE ZURÜCK (fahrenheit - 32) * 5/9 + 273.15
+ENDE FUNKTION
+
+// 2. HAUUPTPROGRAMM
+
+// Programmüberschrift anzeigen
+AUSGABE "=============================="
+AUSGABE "   Temperaturumrechner"
+AUSGABE "=============================="
+
+// Hauptschleife für die Programmwiederholung
+WIEDERHOLE IMMER:
+    // Menü anzeigen
+    GÜLTIGE_EINGABE = FALSCH
+    
+    // Menüschleife für die Auswahl der Umrechnungsrichtung
+    SOLANGE NICHT GÜLTIGE_EINGABE:
+        AUSGABE "\nBitte wählen Sie die Umrechnungsrichtung:"
+        AUSGABE "1: Celsius zu Fahrenheit"
+        AUSGABE "2: Fahrenheit zu Celsius"
+        AUSGABE "3: Celsius zu Kelvin"
+        AUSGABE "4: Fahrenheit zu Kelvin"
+        AUSGABE "Ihre Wahl (1-4): "
+        
+        EINGABE = BENUTZEREINGABE()
+        
+        // Eingabevalidierung
+        WENN EINGABE in ['1', '2', '3', '4']:
+            GÜLTIGE_EINGABE = WAHR
+        SONST:
+            AUSGABE "Ungültige Eingabe. Bitte wählen Sie eine Zahl von 1 bis 4."
+    
+    // Temperaturwert einlesen
+    WIEDERHOLE:
+        VERSUCHE:
+            WENN EINGABE == '1' ODER EINGABE == '3':
+                WERT = EINGABE_ALS_KOMMAZAHL("Bitte geben Sie die Temperatur in Celsius ein (z.B. 25.3): ")
+            SONST:
+                WERT = EINGABE_ALS_KOMMAZAHL("Bitte geben Sie die Temperatur in Fahrenheit ein (z.B. 77.5): ")
+            BRECHE AUS SCHLEIFE
+        FEHLER:
+            AUSGABE "Ungültige Eingabe. Bitte geben Sie eine Zahl ein."
+    
+    // Umrechnung durchführen
+    WENN EINGABE == '1':
+        ERGEBNIS = celsius_zu_fahrenheit(WERT)
+        AUSGABE "Ergebnis: " + WERT + "°C entsprechen " + RUNDE_AUF_EIN_NACHKOMMASTELLE(ERGEBNIS) + "°F"
+    SONST WENN EINGABE == '2':
+        ERGEBNIS = fahrenheit_zu_celsius(WERT)
+        AUSGABE "Ergebnis: " + WERT + "°F entsprechen " + RUNDE_AUF_EIN_NACHKOMMASTELLE(ERGEBNIS) + "°C"
+    SONST WENN EINGABE == '3':
+        ERGEBNIS = celsius_zu_kelvin(WERT)
+        AUSGABE "Ergebnis: " + WERT + "°C entsprechen " + RUNDE_AUF_EIN_NACHKOMMASTELLE(ERGEBNIS) + " Kelvin"
+    SONST:
+        ERGEBNIS = fahrenheit_zu_kelvin(WERT)
+        AUSGABE "Ergebnis: " + WERT + "°F entsprechen " + RUNDE_AUF_EIN_NACHKOMMASTELLE(ERGEBNIS) + " Kelvin"
+    
+    // Abfrage nach weiterer Umrechnung
+    WIEDERHOLE:
+        WEITER = KLEINGESCHRIEBEN(BENUTZEREINGABE("\nMöchten Sie eine weitere Umrechnung durchführen? (ja/nein): "))
+        WENN WEITER == 'nein' ODER WEITER == 'n':
+            AUSGABE "\nVielen Dank für die Nutzung des Temperaturumrechners."
+            AUSGABE "Auf Wiedersehen!"
+            BEENDEN
+        SONST WENN WEITER == 'ja' ODER WEITER == 'j':
+            BRECHE AUS SCHLEIFE
+        SONST:
+            AUSGABE "Bitte antworten Sie mit 'ja' oder 'nein'."
+ENDE WIEDERHOLE
